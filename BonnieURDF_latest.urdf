@@ -1,0 +1,803 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="BonnieURDF_latest">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.03615 0.00032 0.05426"
+        rpy="0 0 0" />
+      <mass
+        value="5.4310409" />
+      <inertia
+        ixx="0.07333"
+        ixy="-0.00012"
+        ixz="0.0138"
+        iyy="0.05085"
+        iyz="-4E-05"
+        izz="0.08396" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="r_roll_link">
+    <inertial>
+      <origin
+        xyz="-0.00179 -0.000876 -0.055111"
+        rpy="0 0 0" />
+      <mass
+        value="0.77443" />
+      <inertia
+        ixx="0.001081"
+        ixy="2E-06"
+        ixz="7E-06"
+        iyy="0.000774"
+        iyz="0"
+        izz="0.000774" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_roll_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_roll_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_roll_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.125 0"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="r_roll_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="r_yaw_link">
+    <inertial>
+      <origin
+        xyz="8E-06 -0.041712 -0.062133"
+        rpy="0 0 0" />
+      <mass
+        value="0.85746" />
+      <inertia
+        ixx="0.001088"
+        ixy="2E-06"
+        ixz="0"
+        iyy="0.00136"
+        iyz="9.9E-05"
+        izz="0.000833" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_yaw_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="0.02 0 -0.0585"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="r_roll_link" />
+    <child
+      link="r_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="r_pitch_link">
+    <inertial>
+      <origin
+        xyz="0.009263 -0.0005 -0.036818"
+        rpy="0 0 0" />
+      <mass
+        value="1.5261" />
+      <inertia
+        ixx="0.002134"
+        ixy="5E-06"
+        ixz="-0.000367"
+        iyy="0.003721"
+        iyz="4E-06"
+        izz="0.004751" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.022 -0.071"
+      rpy="1.5708 1.5708 0" />
+    <parent
+      link="r_yaw_link" />
+    <child
+      link="r_pitch_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="r_knee_link">
+    <inertial>
+      <origin
+        xyz="0.00896 0.00027667 -0.0058169"
+        rpy="0 0 0" />
+      <mass
+        value="0.051027" />
+      <inertia
+        ixx="7.37E-06"
+        ixy="3.3E-07"
+        ixz="-1.23E-06"
+        iyy="2.572E-05"
+        iyz="-4E-08"
+        izz="3.214E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_knee_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_knee_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_knee_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.0556999999999996"
+      rpy="0 0 1.5707963267949" />
+    <parent
+      link="r_pitch_link" />
+    <child
+      link="r_knee_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="r_pas1_link">
+    <inertial>
+      <origin
+        xyz="0.092132 -0.00011396 0.00046816"
+        rpy="0 0 0" />
+      <mass
+        value="0.22498" />
+      <inertia
+        ixx="3.8991E-05"
+        ixy="4.65E-06"
+        ixz="4.57E-06"
+        iyy="0.0018412"
+        iyz="1E-08"
+        izz="0.0018559" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_pas1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_pas1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_pas1_joint"
+    type="revolute">
+    <origin
+      xyz="0.168 0 -0.0647"
+      rpy="0 0 -1.722" />
+    <parent
+      link="r_pitch_link" />
+    <child
+      link="r_pas1_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="r_pas2_link">
+    <inertial>
+      <origin
+        xyz="0.066727 -0.0017204 0.00024193"
+        rpy="0 0 0" />
+      <mass
+        value="0.15816" />
+      <inertia
+        ixx="3.449E-05"
+        ixy="2.961E-05"
+        ixz="-1.81E-05"
+        iyy="0.00091855"
+        iyz="7E-08"
+        izz="0.00091882" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_pas2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_pas2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_pas2_joint"
+    type="revolute">
+    <origin
+      xyz="0.23 0 0"
+      rpy="0 0 1.454" />
+    <parent
+      link="r_pas1_link" />
+    <child
+      link="r_pas2_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="r_ankle_link">
+    <inertial>
+      <origin
+        xyz="-0.005767 -0.004689 0.00033"
+        rpy="0 0 0" />
+      <mass
+        value="0.26119" />
+      <inertia
+        ixx="7.7E-05"
+        ixy="-3.1E-05"
+        ixz="0"
+        iyy="0.000275"
+        iyz="0"
+        izz="0.000289" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_ankle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/r_ankle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="r_ankle_joint"
+    type="revolute">
+    <origin
+      xyz="0.2 0 0"
+      rpy="0 0 1.5708" />
+    <parent
+      link="r_pas2_link" />
+    <child
+      link="r_ankle_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="l_roll_link">
+    <inertial>
+      <origin
+        xyz="-0.0017898 8.72E-06 -0.055111"
+        rpy="0 0 0" />
+      <mass
+        value="0.77442" />
+      <inertia
+        ixx="0.0010807"
+        ixy="1.57E-06"
+        ixz="6.78E-06"
+        iyy="0.00077438"
+        iyz="-6E-08"
+        izz="0.0007139" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_roll_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_roll_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_roll_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.125 0"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="l_roll_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="l_yaw_link">
+    <inertial>
+      <origin
+        xyz="-8.03E-06 0.041712 -0.062133"
+        rpy="0 0 0" />
+      <mass
+        value="0.85746" />
+      <inertia
+        ixx="0.0010882"
+        ixy="1.56E-06"
+        ixz="2E-08"
+        iyy="0.0013603"
+        iyz="-9.938E-05"
+        izz="0.00083255" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_yaw_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_yaw_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_yaw_joint"
+    type="revolute">
+    <origin
+      xyz="0.02 0 -0.0585"
+      rpy="3.1416 1.5708 0" />
+    <parent
+      link="l_roll_link" />
+    <child
+      link="l_yaw_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="l_pitch_link">
+    <inertial>
+      <origin
+        xyz="0.0092633 -0.000224 -0.036818"
+        rpy="0 0 0" />
+      <mass
+        value="1.5261" />
+      <inertia
+        ixx="0.0021342"
+        ixy="-2.131E-05"
+        ixz="-0.00036682"
+        iyy="0.0037212"
+        iyz="-8.48E-06"
+        izz="0.0047508" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_pitch_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_pitch_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_pitch_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.022 -0.071"
+      rpy="0 1.5708 1.5708" />
+    <parent
+      link="l_yaw_link" />
+    <child
+      link="l_pitch_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="l_knee_link">
+    <inertial>
+      <origin
+        xyz="0.00896 -0.00027667 -0.0058169"
+        rpy="0 0 0" />
+      <mass
+        value="0.051027" />
+      <inertia
+        ixx="7.37E-06"
+        ixy="-3.3E-07"
+        ixz="-1.23E-06"
+        iyy="2.572E-05"
+        iyz="4E-08"
+        izz="3.214E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_knee_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_knee_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_knee_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.0557"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="l_pitch_link" />
+    <child
+      link="l_knee_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="l_pas1_link">
+    <inertial>
+      <origin
+        xyz="0.092132 0.00011376 0.00045005"
+        rpy="0 0 0" />
+      <mass
+        value="0.22498" />
+      <inertia
+        ixx="3.908E-05"
+        ixy="-4.66E-06"
+        ixz="5.08E-06"
+        iyy="0.0018413"
+        iyz="-1E-08"
+        izz="0.0018559" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_pas1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_pas1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_pas1_joint"
+    type="revolute">
+    <origin
+      xyz="0.168 0 -0.06455"
+      rpy="0 0 1.722" />
+    <parent
+      link="l_pitch_link" />
+    <child
+      link="l_pas1_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="l_pas2_link">
+    <inertial>
+      <origin
+        xyz="0.066727 0.0017204 0.00024193"
+        rpy="0 0 0" />
+      <mass
+        value="0.15816" />
+      <inertia
+        ixx="3.449E-05"
+        ixy="-2.961E-05"
+        ixz="-1.81E-06"
+        iyy="0.00091855"
+        iyz="-7E-08"
+        izz="0.00091883" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_pas2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_pas2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_pas2_joint"
+    type="revolute">
+    <origin
+      xyz="0.23 0 -0.0001"
+      rpy="0 0 -1.454" />
+    <parent
+      link="l_pas1_link" />
+    <child
+      link="l_pas2_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+  <link
+    name="l_ankle_link">
+    <inertial>
+      <origin
+        xyz="-0.005767 0.0046887 0.00033026"
+        rpy="0 0 0" />
+      <mass
+        value="0.26119" />
+      <inertia
+        ixx="7.65E-05"
+        ixy="3.126E-05"
+        ixz="-4.6E-07"
+        iyy="0.0002751"
+        iyz="-4E-07"
+        izz="0.00028878" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_ankle_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://BonnieURDF_latest/meshes/l_ankle_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_ankle_joint"
+    type="revolute">
+    <origin
+      xyz="0.2 0 0"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="l_pas2_link" />
+    <child
+      link="l_ankle_link" />
+    <axis
+      xyz="0 0 1" />
+      <limit effort="150.0" lower="-6.2831853" upper="6.2831853" velocity="10"/>
+  </joint>
+</robot>
