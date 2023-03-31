@@ -10,7 +10,7 @@ Pinocchio_Utilities::Pinocchio_Utilities(std::string urdfName) {
     pinocchio::urdf::buildModel(urdfName,root_joint,model_Bonnie_Dynamic);
 }
 
-// NOTE: q_B here should be the one whose offset are defined in the real system, NOT in the urdf
+
 void Pinocchio_Utilities::computeJac(Eigen::VectorXd q_B) {
     pinocchio::Data data_B(model_Bonnie_Static);
     q_B(4)=q_B(4)-98.66/180*pi;
@@ -42,4 +42,17 @@ void Pinocchio_Utilities::computeJac(Eigen::VectorXd q_B) {
 
     J_L=J_L_tmp*J_trans;
     J_R=J_R_tmp*J_trans;
+    pe_L=data_B.oMi[l_ankle_Joint].translation();
+    pe_R=data_B.oMi[r_ankle_Joint].translation();
+}
+
+void Pinocchio_Utilities::computeIg(Eigen::VectorXd q_B) {
+    pinocchio::Data data_B(model_Bonnie_Static);
+    Eigen::VectorXd v_B = Eigen::VectorXd::Ones(model_Bonnie_Static.nv)*0;
+    q_B(4)=q_B(4)-98.66/180*pi;
+    q_B(5)=q_B(5)-(-83.31/180*pi);
+    q_B(11)=q_B(11)-(-98.66/180*pi);
+    q_B(12)=q_B(12)-83.31/180*pi;
+    pinocchio::ccrba(model_Bonnie_Static,data_B,q_B,v_B);
+    Ig=data_B.Ig.inertia().matrix();
 }

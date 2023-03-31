@@ -31,7 +31,7 @@ LegClass::LegClass(){
     std::string point[2][7] = {"OJ", "JK", "KBD", "AB", "CDG", "FGH", "Hh",
                                "OJ", "JK", "KBD", "AB", "CDG", "FGH", "Hh"};
     for (int l = 0; l < 2; l++) {
-        for (int i; i < 7; i++) {
+        for (int i=0; i < 7; i++) {
             link[l][i].ID = i;
             link[l][i].point = point[l][i];
             link[l][i].name = name[l][i];
