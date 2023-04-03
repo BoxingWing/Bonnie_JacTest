@@ -1,6 +1,6 @@
 clear variables;
 close all;
-data=load('quill_outputdata.txt');
+data=load('Outputdata_right.txt');
 tauL=data(:,1:5);
 tauL_M=data(:,6:10);
 tauR=data(:,11:15);

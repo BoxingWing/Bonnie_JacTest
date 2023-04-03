@@ -8,7 +8,7 @@
 #include "FileOperator.h"
 #include "quill/Quill.h"
 
-FileOperator fileRW("../TestData_Static.txt");
+FileOperator fileRW("../TestData_Static_right.txt");
 const double pi=3.1415926;
 double Ts=0.001;
 LegClass legKine;
@@ -96,7 +96,7 @@ int main() {
     //================ Test for jacobian estimated motor torques ==========
     std::vector<double> tmpValue;
     std::string tmpStr;
-    quill::Handler *file_handler = quill::file_handler("../quill_outputdata.txt", "w");  // Get a pointer to the default logger
+    quill::Handler *file_handler = quill::file_handler("../Outputdata_right.txt", "w");  // Get a pointer to the default logger
     file_handler->set_pattern(QUILL_STRING("%(message)"));
     quill::Logger *dl = quill::create_logger("logger", file_handler);
     quill::start();
@@ -143,8 +143,8 @@ int main() {
         Reul=Pinocchio_Utilities::eul2Rot(eul[0],eul[1],0);
         Eigen::Matrix<double,5,1> tauL,tauR,tauL_M,tauR_M;
         Eigen::Matrix<double,3,1> FendL,FendR;
-        FendL<<0,0,-14*9.8/2;
-        FendR<<0,0,-14*9.8/2;
+        FendL<<-0.4212, 3.8698, -70.7308;
+        FendR<<-3.1929, -5.9263, -54.5708;
         tauL=pinLib.J_L.transpose()*(Reul.transpose()*FendL);
         tauR=pinLib.J_R.transpose()*(Reul.transpose()*FendR);
         tauL_M<< M10015_I2T(Il[0]),M8016_I2T(Il[1]),M8016_I2T(Il[2]),M10015_I2T(Il[3]),0;
