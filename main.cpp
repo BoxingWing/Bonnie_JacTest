@@ -6,6 +6,8 @@
 #include "Leg.h"
 #include "Pinocchio_Utilities.h"
 #include "FileOperator.h"
+#include "quill/Quill.h"
+
 FileOperator fileRW("../TestData_Static.txt");
 const double pi=3.1415926;
 double Ts=0.001;
@@ -91,13 +93,21 @@ int main() {
     pinLib.computeIg(q_B_ori);
     std::cout<<pinLib.Ig<<std::endl;
 
+    //================ Test for jacobian estimated motor torques ==========
+    std::vector<double> tmpValue;
+    std::string tmpStr;
+    quill::Handler *file_handler = quill::file_handler("../quill_outputdata.txt", "w");  // Get a pointer to the default logger
+    file_handler->set_pattern(QUILL_STRING("%(message)"));
+    quill::Logger *dl = quill::create_logger("logger", file_handler);
+    quill::start();
     double ql[5],qr[5],pas[4],Il[4],Ir[5];
     double acc[3],eul[3],omegaL[3],phaseAll,legSwingInd,pB_fk[6],pas_delta[4];
+    Eigen::Matrix<double,3,3> Reul;
     for (int i = 0; i < fileRW.getTotalLine(); i++) {
         // read data
         fileRW.getNewLine();
         fileRW.getNumsInLine();
-       acc[0] = fileRW.values[0];
+        acc[0] = fileRW.values[0];
         acc[1] = fileRW.values[1];
         acc[2] = fileRW.values[2];
         eul[0] = fileRW.values[3];
@@ -130,13 +140,13 @@ int main() {
         pinLib.computeJac(q_B_ori);
         //std::cout<<pinLib.J_L<<std::endl;
         //std::cout<<pinLib.J_R<<std::endl;
-
+        Reul=Pinocchio_Utilities::eul2Rot(eul[0],eul[1],0);
         Eigen::Matrix<double,5,1> tauL,tauR,tauL_M,tauR_M;
         Eigen::Matrix<double,3,1> FendL,FendR;
         FendL<<0,0,-14*9.8/2;
         FendR<<0,0,-14*9.8/2;
-        tauL=pinLib.J_L.transpose()*FendL;
-        tauR=pinLib.J_R.transpose()*FendR;
+        tauL=pinLib.J_L.transpose()*(Reul.transpose()*FendL);
+        tauR=pinLib.J_R.transpose()*(Reul.transpose()*FendR);
         tauL_M<< M10015_I2T(Il[0]),M8016_I2T(Il[1]),M8016_I2T(Il[2]),M10015_I2T(Il[3]),0;
         tauR_M<< M10015_I2T(Ir[0]),M8016_I2T(Ir[1]),M8016_I2T(Ir[2]),M10015_I2T(Ir[3]),0;
 
@@ -146,6 +156,20 @@ int main() {
         std::cout<<"LLeg_Mot:"<<tauL_M.transpose()<<std::endl<<std::endl;
         std::cout<<"RLeg_Jac:"<<tauR.transpose()<<std::endl;
         std::cout<<"RLeg_Mot:"<<tauR_M.transpose()<<std::endl;
+
+        tmpValue.clear();
+
+        for (int ii=0;ii<5;ii++)
+            tmpValue.push_back(tauL(ii));
+        for (int ii=0;ii<5;ii++)
+            tmpValue.push_back(tauL_M(ii));
+        for (int ii=0;ii<5;ii++)
+            tmpValue.push_back(tauR(ii));
+        for (int ii=0;ii<5;ii++)
+            tmpValue.push_back(tauR_M(ii));
+
+        tmpStr = fmt::format("{:.5f}", fmt::join(tmpValue, ","));
+        LOG_INFO(dl, "{}", tmpStr);
     }
     std::cout<<std::endl;
     std::cout<<pinLib.pe_L.transpose()<<std::endl;

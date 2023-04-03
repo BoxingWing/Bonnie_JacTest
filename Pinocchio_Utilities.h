@@ -25,6 +25,7 @@ public:
     // HOWEVER, the joint order in q_B should follow the one defined in the urdf
     void computeIg(Eigen::VectorXd q_B);
     void computeJac(Eigen::VectorXd q_B);
+    static Eigen::Matrix<double,3,3> eul2Rot(double roll, double pitch, double yaw);
 };
 
 
