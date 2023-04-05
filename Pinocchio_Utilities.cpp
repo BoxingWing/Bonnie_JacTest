@@ -70,3 +70,14 @@ Eigen::Matrix<double, 3, 3> Pinocchio_Utilities::eul2Rot(double roll, double pit
         0,sin(roll),cos(roll);
     return Rz*Ry*Rx;
 }
+
+void Pinocchio_Utilities::computeG(Eigen::VectorXd q_B) {
+    pinocchio::Data data(model_Bonnie_Static);
+    q_B(4)=q_B(4)-98.66/180*pi;
+    q_B(5)=q_B(5)-(-83.31/180*pi);
+    q_B(11)=q_B(11)-(-98.66/180*pi);
+    q_B(12)=q_B(12)-83.31/180*pi;
+    pinocchio::computeGeneralizedGravity(model_Bonnie_Static,data,q_B);
+    Gq=data.g;
+    //pinocchio::crba(model_Bonnie_Static,data,q_B);
+}

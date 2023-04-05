@@ -9,6 +9,7 @@
 #include "pinocchio/algorithm/joint-configuration.hpp"
 #include "pinocchio/algorithm/jacobian.hpp"
 #include "pinocchio/algorithm/centroidal.hpp"
+#include "pinocchio/algorithm/rnea.hpp"
 
 class Pinocchio_Utilities {
 public:
@@ -18,6 +19,7 @@ public:
     Eigen::Matrix<double,3,5> J_L,J_R;
     Eigen::Matrix<double,3,3> Ig;
     Eigen::Matrix<double,3,1> pe_L,pe_R;
+    Eigen::Matrix<double,14,1> Gq; // generalized gravity term
 
     Pinocchio_Utilities(std::string urdfName);
 
@@ -25,6 +27,7 @@ public:
     // HOWEVER, the joint order in q_B should follow the one defined in the urdf
     void computeIg(Eigen::VectorXd q_B);
     void computeJac(Eigen::VectorXd q_B);
+    void computeG(Eigen::VectorXd q_B);
     static Eigen::Matrix<double,3,3> eul2Rot(double roll, double pitch, double yaw);
 };
 

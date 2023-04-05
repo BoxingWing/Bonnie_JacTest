@@ -143,8 +143,8 @@ int main() {
         Reul=Pinocchio_Utilities::eul2Rot(eul[0],eul[1],0);
         Eigen::Matrix<double,5,1> tauL,tauR,tauL_M,tauR_M;
         Eigen::Matrix<double,3,1> FendL,FendR;
-        FendL<<-0.4212, 3.8698, -70.7308;
-        FendR<<-3.1929, -5.9263, -54.5708;
+        FendL<<-0.4212, -3.8698, -70.7308;
+        FendR<<-3.1929, 5.9263, -54.5708;
         tauL=pinLib.J_L.transpose()*(Reul.transpose()*FendL);
         tauR=pinLib.J_R.transpose()*(Reul.transpose()*FendR);
         tauL_M<< M10015_I2T(Il[0]),M8016_I2T(Il[1]),M8016_I2T(Il[2]),M10015_I2T(Il[3]),0;
@@ -174,6 +174,9 @@ int main() {
     std::cout<<std::endl;
     std::cout<<pinLib.pe_L.transpose()<<std::endl;
     std::cout<<pinLib.pe_R.transpose()<<std::endl;
+
+    pinLib.computeG(q_B_ori);
+    std::cout<<pinLib.Gq.transpose()<<std::endl;
 }
 double M8016_I2T(double Id)
 {
