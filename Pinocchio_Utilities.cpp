@@ -21,14 +21,16 @@ void Pinocchio_Utilities::computeJac(Eigen::VectorXd q_B) {
     auto l_ankle_Joint=model_Bonnie_Static.getJointId("l_ankle_joint");
 
     pinocchio::computeJointJacobians(model_Bonnie_Static,data_B,q_B);
-    Eigen::Matrix<double,3,7> J_L_tmp,J_R_tmp;
+    Eigen::Matrix<double,4,7> J_L_tmp,J_R_tmp;
     Eigen::Matrix<double,6,14> J_tmp;
     J_tmp.setZero();
     pinocchio::getJointJacobian(model_Bonnie_Static,data_B,l_ankle_Joint,pinocchio::LOCAL_WORLD_ALIGNED,J_tmp);
-    J_L_tmp=J_tmp.block<3,7>(0,0);
+    J_L_tmp.block<3,7>(0,0)=J_tmp.block<3,7>(0,0);
+    J_L_tmp.row(3)=J_tmp.block<1,7>(5,0);
     J_tmp.setZero();
     pinocchio::getJointJacobian(model_Bonnie_Static,data_B,r_ankle_Joint,pinocchio::LOCAL_WORLD_ALIGNED,J_tmp);
-    J_R_tmp=J_tmp.block<3,7>(0,7);
+    J_R_tmp.block<3,7>(0,0)=J_tmp.block<3,7>(0,7);
+    J_R_tmp.row(3)=J_tmp.block<1,7>(5,7);
 
     Eigen::Matrix<double,7,5> J_trans;
     J_trans.setZero();

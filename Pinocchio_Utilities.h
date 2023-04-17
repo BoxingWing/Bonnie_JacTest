@@ -16,7 +16,7 @@ public:
     pinocchio::Model model_Bonnie_Static, model_Bonnie_Dynamic;
     Eigen::VectorXd q_S, q_D;
     Eigen::VectorXd dq_S, dq_D;
-    Eigen::Matrix<double,3,5> J_L,J_R;
+    Eigen::Matrix<double,4,5> J_L,J_R;
     Eigen::Matrix<double,3,3> Ig;
     Eigen::Matrix<double,3,1> pe_L,pe_R;
     Eigen::Matrix<double,14,1> Gq; // generalized gravity term

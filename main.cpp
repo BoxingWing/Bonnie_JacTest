@@ -145,8 +145,17 @@ int main() {
         Eigen::Matrix<double,3,1> FendL,FendR;
         FendL<<-0.4212, -3.8698, -70.7308;
         FendR<<-3.1929, 5.9263, -54.5708;
-        tauL=pinLib.J_L.transpose()*(Reul.transpose()*FendL);
-        tauR=pinLib.J_R.transpose()*(Reul.transpose()*FendR);
+
+        Eigen::Matrix<double,4,1> WrenchL,WrenchR;
+        Eigen::Matrix<double,3,1> FendLW,FendRW;
+        FendLW=Reul.transpose()*FendL;
+        FendRW=Reul.transpose()*FendR;
+
+        WrenchL<<FendLW(0),FendLW(1),FendLW(2),0;
+        WrenchR<<FendRW(0),FendRW(1),FendRW(2),0;
+
+        tauL=pinLib.J_L.transpose()*WrenchL;
+        tauR=pinLib.J_R.transpose()*WrenchR;
         tauL_M<< M10015_I2T(Il[0]),M8016_I2T(Il[1]),M8016_I2T(Il[2]),M10015_I2T(Il[3]),0;
         tauR_M<< M10015_I2T(Ir[0]),M8016_I2T(Ir[1]),M8016_I2T(Ir[2]),M10015_I2T(Ir[3]),0;
 
