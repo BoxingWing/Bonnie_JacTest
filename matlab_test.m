@@ -1,6 +1,7 @@
 clear variables;
 close all;
 b=importrobot('BonnieURDF_latest.urdf');
+config0= homeConfiguration(b);
 config = homeConfiguration(b);
 config(1).JointPosition=-0.008;
 config(2).JointPosition=-0.0021;
@@ -11,5 +12,6 @@ config(6).JointPosition=-1.0082-(-83.31/180*pi);
 config(7).JointPosition=0.1733;
 J=geometricJacobian(b,config,'l_ankle_link')
 show(b,config)
-res=getTransform(b,config,'l_ankle_link')
+resL=getTransform(b,config0,'l_ankle_link');
+resR=getTransform(b,config0,'r_ankle_link');
 
