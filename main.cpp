@@ -12,7 +12,8 @@ FileOperator fileRW("../TestData_Static_right.txt");
 const double pi=3.1415926;
 double Ts=0.001;
 LegClass legKine;
-Eigen::Matrix<double,6,1> FKDIY(Eigen::VectorXd q_B);
+Eigen::Matrix<double,6,1> FKDIY(Eigen::VectorXd q_B,bool removePasOff);
+Eigen::Matrix<double,14,1> IKDIY(Eigen::Matrix<double,5,1> peR, Eigen::Matrix<double,5,1> peL,bool removePasOff);
 
 double M8016_I2T(double Id);
 double M10015_I2T(double Id);
@@ -68,7 +69,7 @@ int main() {
     std::cout<<data_B.oMi[l_ankle_Joint].translation().transpose()<<std::endl;
 
     Eigen::Matrix<double,6,1> FeDIY_nominal,FeDIY_tmp;
-    FeDIY_nominal=FKDIY(q_B);
+    FeDIY_nominal=FKDIY(q_B,true);
     //std::cout<<FeDIY.transpose()<<std::endl;
     Eigen::Matrix<double,3,5> J_L_DIY;
     Eigen::Matrix<double,3,1> J_L_col;
@@ -79,11 +80,12 @@ int main() {
             q_tmp(i)+=deltaAngle;
         else
             q_tmp(6)+=deltaAngle;
-        FeDIY_tmp= FKDIY(q_tmp);
+        FeDIY_tmp= FKDIY(q_tmp,true);
         J_L_col<<FeDIY_tmp(3)-FeDIY_nominal(3),FeDIY_tmp(4)-FeDIY_nominal(4),FeDIY_tmp(5)-FeDIY_nominal(5);
         J_L_col=J_L_col/deltaAngle;
         J_L_DIY.col(i)=J_L_col;
     }
+    std::cout<<"J_L_DIY"<<std::endl;
     std::cout<<J_L_DIY<<std::endl;
     // test for the change of Ig under different leg length
     pinLib.computeJac(q_B_ori);
@@ -145,8 +147,17 @@ int main() {
         Eigen::Matrix<double,3,1> FendL,FendR;
         FendL<<-0.4212, -3.8698, -70.7308;
         FendR<<-3.1929, 5.9263, -54.5708;
-        tauL=pinLib.J_L.transpose()*(Reul.transpose()*FendL);
-        tauR=pinLib.J_R.transpose()*(Reul.transpose()*FendR);
+
+        Eigen::Matrix<double,4,1> WrenchL,WrenchR;
+        Eigen::Matrix<double,3,1> FendLW,FendRW;
+        FendLW=Reul.transpose()*FendL;
+        FendRW=Reul.transpose()*FendR;
+
+        WrenchL<<FendLW(0),FendLW(1),FendLW(2),0;
+        WrenchR<<FendRW(0),FendRW(1),FendRW(2),0;
+
+        tauL=pinLib.J_L.transpose()*WrenchL;
+        tauR=pinLib.J_R.transpose()*WrenchR;
         tauL_M<< M10015_I2T(Il[0]),M8016_I2T(Il[1]),M8016_I2T(Il[2]),M10015_I2T(Il[3]),0;
         tauR_M<< M10015_I2T(Ir[0]),M8016_I2T(Ir[1]),M8016_I2T(Ir[2]),M10015_I2T(Ir[3]),0;
 
@@ -177,6 +188,21 @@ int main() {
 
     pinLib.computeG(q_B_ori);
     std::cout<<pinLib.Gq.transpose()<<std::endl;
+
+    //---------------------- Test for centroid inertia -------------------------
+    Eigen::Matrix<double,14,1> qIK;
+    Eigen::Matrix<double,5,1> peL,peR;
+    peL<<0,0.0824,-0.6,0,0;
+    peR<<0,-0.0824,-0.6,0,0;
+    qIK=IKDIY( peR, peL,false);
+//    Eigen::Matrix<double,6,1> peFK;
+//    peFK=FKDIY(qIK);
+//    std::cout<<peFK.transpose()<<std::endl;
+    std::cout<<qIK.transpose()<<std::endl;
+    pinLib.computeIg(qIK);
+    std::cout<<pinLib.Ig<<std::endl;
+    std::cout<<pinLib.pe_R.transpose()<<std::endl;
+    std::cout<<pinLib.pe_L.transpose()<<std::endl;
 }
 double M8016_I2T(double Id)
 {
@@ -197,18 +223,21 @@ double sgn(double in)
     else
         return 0.0;
 }
-Eigen::Matrix<double,6,1> FKDIY(Eigen::VectorXd q_B)
+Eigen::Matrix<double,6,1> FKDIY(Eigen::VectorXd q_B,bool removePasOff)
 {
     auto q_kine=q_B;
     double tmp[3];
     tmp[0]=q_kine(4);tmp[1]=q_kine(5);tmp[2]=q_kine(6);
-    tmp[0]=tmp[0]+(98.66/180*pi);
-    tmp[1]=tmp[1]+(-83.31/180*pi);
+    if (removePasOff)
+    {   tmp[0]=tmp[0]+(98.66/180*pi);
+        tmp[1]=tmp[1]+(-83.31/180*pi);}
     q_kine(4)=tmp[2];q_kine(5)=tmp[0];q_kine(6)=tmp[1];
 
     tmp[0]=q_kine(11);tmp[1]=q_kine(12);tmp[2]=q_kine(13);
-    tmp[0]=tmp[0]+(-98.66/180*pi);
-    tmp[1]=tmp[1]+(83.31/180*pi);
+    if (removePasOff) {
+        tmp[0] = tmp[0] + (-98.66 / 180 * pi);
+        tmp[1] = tmp[1] + (83.31 / 180 * pi);
+    }
     q_kine(11)=tmp[2];q_kine(12)=tmp[0];q_kine(13)=tmp[1];
     for (int i=0;i<7;i++)
     {
@@ -223,4 +252,28 @@ Eigen::Matrix<double,6,1> FKDIY(Eigen::VectorXd q_B)
     Fe<<legKine.Terminal[0][0],legKine.Terminal[0][1]-0.125,legKine.Terminal[0][2],
         legKine.Terminal[1][0],legKine.Terminal[1][1]+0.125,legKine.Terminal[1][2];
     return Fe;
+}
+
+Eigen::Matrix<double,14,1> IKDIY(Eigen::Matrix<double,5,1> peR, Eigen::Matrix<double,5,1> peL, bool removePasOff)
+{
+    double pas[4]={0};
+    double pe[10]={0};
+    peR(1)=peR(1)+0.125;
+    peL(1)=peL(1)-0.125;
+    for (int i=0;i<5;i++)
+        {pe[i]=peR(i);pe[i+5]=peL(i);}
+    legKine.IKinematics(pe,pas);
+    Eigen::Matrix<double,14,1> qFK;
+//    qFK = ql[0],ql[1],ql[2],ql[3],pas[2],pas[3],ql[4],qr[0],qr[1],qr[2],qr[3],pas[0],pas[1],qr[4];
+    qFK<<legKine.theta[1][0],legKine.theta[1][1],legKine.theta[1][2],legKine.theta[1][3],legKine.theta[1][5],legKine.theta[1][6], legKine.theta[1][4],
+            legKine.theta[0][0],legKine.theta[0][1],legKine.theta[0][2],legKine.theta[0][3],legKine.theta[0][5],legKine.theta[0][6], legKine.theta[0][4];
+    if (removePasOff)
+    {
+        qFK(4)=qFK(4)-(98.66/180*pi);
+        qFK(5)=qFK(5)-(-83.31/180*pi);
+        qFK(11)=qFK(11)-(-98.66/180*pi);
+        qFK(12)=qFK(12)-(83.31/180*pi);
+    }
+
+    return qFK;
 }

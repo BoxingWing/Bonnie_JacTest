@@ -21,14 +21,16 @@ void Pinocchio_Utilities::computeJac(Eigen::VectorXd q_B) {
     auto l_ankle_Joint=model_Bonnie_Static.getJointId("l_ankle_joint");
 
     pinocchio::computeJointJacobians(model_Bonnie_Static,data_B,q_B);
-    Eigen::Matrix<double,3,7> J_L_tmp,J_R_tmp;
+    Eigen::Matrix<double,4,7> J_L_tmp,J_R_tmp;
     Eigen::Matrix<double,6,14> J_tmp;
     J_tmp.setZero();
     pinocchio::getJointJacobian(model_Bonnie_Static,data_B,l_ankle_Joint,pinocchio::LOCAL_WORLD_ALIGNED,J_tmp);
-    J_L_tmp=J_tmp.block<3,7>(0,0);
+    J_L_tmp.block<3,7>(0,0)=J_tmp.block<3,7>(0,0);
+    J_L_tmp.row(3)=J_tmp.block<1,7>(5,0);
     J_tmp.setZero();
     pinocchio::getJointJacobian(model_Bonnie_Static,data_B,r_ankle_Joint,pinocchio::LOCAL_WORLD_ALIGNED,J_tmp);
-    J_R_tmp=J_tmp.block<3,7>(0,7);
+    J_R_tmp.block<3,7>(0,0)=J_tmp.block<3,7>(0,7);
+    J_R_tmp.row(3)=J_tmp.block<1,7>(5,7);
 
     Eigen::Matrix<double,7,5> J_trans;
     J_trans.setZero();
@@ -48,6 +50,8 @@ void Pinocchio_Utilities::computeJac(Eigen::VectorXd q_B) {
 
 void Pinocchio_Utilities::computeIg(Eigen::VectorXd q_B) {
     pinocchio::Data data_B(model_Bonnie_Static);
+    auto r_ankle_Joint=model_Bonnie_Static.getJointId("r_ankle_joint");
+    auto l_ankle_Joint=model_Bonnie_Static.getJointId("l_ankle_joint");
     Eigen::VectorXd v_B = Eigen::VectorXd::Ones(model_Bonnie_Static.nv)*0;
     q_B(4)=q_B(4)-98.66/180*pi;
     q_B(5)=q_B(5)-(-83.31/180*pi);
@@ -55,6 +59,8 @@ void Pinocchio_Utilities::computeIg(Eigen::VectorXd q_B) {
     q_B(12)=q_B(12)-83.31/180*pi;
     pinocchio::ccrba(model_Bonnie_Static,data_B,q_B,v_B);
     Ig=data_B.Ig.inertia().matrix();
+    pe_L=data_B.oMi[l_ankle_Joint].translation();
+    pe_R=data_B.oMi[r_ankle_Joint].translation();
 }
 
 Eigen::Matrix<double, 3, 3> Pinocchio_Utilities::eul2Rot(double roll, double pitch, double yaw) {
