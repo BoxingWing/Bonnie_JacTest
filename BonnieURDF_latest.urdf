@@ -26,7 +26,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/base_link.STL" />
+          filename="package://meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -40,7 +40,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/base_link.STL" />
+          filename="package://meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -66,7 +66,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_roll_link.STL" />
+          filename="package://meshes/r_roll_link.STL" />
       </geometry>
       <material
         name="">
@@ -80,7 +80,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_roll_link.STL" />
+          filename="package://meshes/r_roll_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -120,7 +120,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_yaw_link.STL" />
+          filename="package://meshes/r_yaw_link.STL" />
       </geometry>
       <material
         name="">
@@ -134,7 +134,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_yaw_link.STL" />
+          filename="package://meshes/r_yaw_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -174,7 +174,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_pitch_link.STL" />
+          filename="package://meshes/r_pitch_link.STL" />
       </geometry>
       <material
         name="">
@@ -188,7 +188,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_pitch_link.STL" />
+          filename="package://meshes/r_pitch_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -228,7 +228,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_knee_link.STL" />
+          filename="package://meshes/r_knee_link.STL" />
       </geometry>
       <material
         name="">
@@ -242,7 +242,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_knee_link.STL" />
+          filename="package://meshes/r_knee_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -282,7 +282,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_pas1_link.STL" />
+          filename="package://meshes/r_pas1_link.STL" />
       </geometry>
       <material
         name="">
@@ -296,7 +296,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_pas1_link.STL" />
+          filename="package://meshes/r_pas1_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -336,7 +336,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_pas2_link.STL" />
+          filename="package://meshes/r_pas2_link.STL" />
       </geometry>
       <material
         name="">
@@ -350,7 +350,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_pas2_link.STL" />
+          filename="package://meshes/r_pas2_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -390,7 +390,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_ankle_link.STL" />
+          filename="package://meshes/r_ankle_link.STL" />
       </geometry>
       <material
         name="">
@@ -404,7 +404,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/r_ankle_link.STL" />
+          filename="package://meshes/r_ankle_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -444,7 +444,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_roll_link.STL" />
+          filename="package://meshes/l_roll_link.STL" />
       </geometry>
       <material
         name="">
@@ -458,7 +458,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_roll_link.STL" />
+          filename="package://meshes/l_roll_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -498,7 +498,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_yaw_link.STL" />
+          filename="package://meshes/l_yaw_link.STL" />
       </geometry>
       <material
         name="">
@@ -512,7 +512,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_yaw_link.STL" />
+          filename="package://meshes/l_yaw_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -552,7 +552,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_pitch_link.STL" />
+          filename="package://meshes/l_pitch_link.STL" />
       </geometry>
       <material
         name="">
@@ -566,7 +566,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_pitch_link.STL" />
+          filename="package://meshes/l_pitch_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -606,7 +606,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_knee_link.STL" />
+          filename="package://meshes/l_knee_link.STL" />
       </geometry>
       <material
         name="">
@@ -620,7 +620,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_knee_link.STL" />
+          filename="package://meshes/l_knee_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -660,7 +660,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_pas1_link.STL" />
+          filename="package://meshes/l_pas1_link.STL" />
       </geometry>
       <material
         name="">
@@ -674,7 +674,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_pas1_link.STL" />
+          filename="package://meshes/l_pas1_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -714,7 +714,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_pas2_link.STL" />
+          filename="package://meshes/l_pas2_link.STL" />
       </geometry>
       <material
         name="">
@@ -728,7 +728,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_pas2_link.STL" />
+          filename="package://meshes/l_pas2_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -768,7 +768,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_ankle_link.STL" />
+          filename="package://meshes/l_ankle_link.STL" />
       </geometry>
       <material
         name="">
@@ -782,7 +782,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://BonnieURDF_latest/meshes/l_ankle_link.STL" />
+          filename="package://meshes/l_ankle_link.STL" />
       </geometry>
     </collision>
   </link>
