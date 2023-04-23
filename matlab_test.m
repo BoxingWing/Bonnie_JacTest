@@ -1,6 +1,6 @@
 clear variables;
 close all;
-b=importrobot('BonnieURDF_latest.urdf');
+b=importrobot('BonnieURDF_latest.urdf','MeshPath','meshes');
 config0= homeConfiguration(b);
 config = homeConfiguration(b);
 config(1).JointPosition=-0.008;
