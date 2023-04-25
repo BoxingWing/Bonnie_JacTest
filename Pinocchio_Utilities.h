@@ -20,14 +20,21 @@ public:
     Eigen::Matrix<double,3,3> Ig;
     Eigen::Matrix<double,3,1> pe_L,pe_R;
     Eigen::Matrix<double,14,1> Gq; // generalized gravity term
+    Eigen::Matrix<double,14,1> qB_urdf;
 
     Pinocchio_Utilities(std::string urdfName);
 
-    // NOTE: q_B here should be the joint angles whose offset are defined in the real system, NOT in the urdf
-    // HOWEVER, the joint order in q_B should follow the one defined in the urdf
-    void computeIg(Eigen::VectorXd q_B);
-    void computeJac(Eigen::VectorXd q_B);
-    void computeG(Eigen::VectorXd q_B);
+    // NOTE: qr, ql, qPas_r, qPas_l should be direct values get from the robot
+    void setJointAngle(double* qr, double *ql, double *qPas_r, double *qPas_l);
+    void computeIg();
+    void computeJac();
+    void computeG();
+    double M8016_I2T(double Id);
+    double M10015_I2T(double Id);
+    double M8016_T2I(double Td);
+    double M10015_T2I(double Td);
+    double sgn(double in);
+
     static Eigen::Matrix<double,3,3> eul2Rot(double roll, double pitch, double yaw);
 };
 

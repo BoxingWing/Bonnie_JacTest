@@ -14,8 +14,8 @@ subplot(2,1,1)
 plot(Icmd,tau)
 subplot(2,1,2)
 plot(Id,tau)
-% tau=0.02641*Icmd+0.4551; % old data, R-square=0.9984
-% tau=0.03148*Icmd+0.1755; % new data, R-square=0.9974
+% tau=0.03189*Icmd-0.1141; % new data, LAR robust, R-square=0.9974
+
 %% MG8016
 Id_16=[0.11,0.2,0.6,1.07,1.52,2.41,2.86,3.66,4.68,5.47,6.44,7.58,10.5];
 Icmd_16=[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300];
@@ -27,3 +27,6 @@ plot(Icmd_16,tau_16)
 subplot(2,1,2)
 plot(Id_16,tau_16)
 % tau=0.02245*Icmd+0.8149; R-square=0.9976
+% 0.8149 is removed when coded into the real-time program. Because it's a
+% positive value, meaning 0 current could generate output torque, which is
+% incorrect.

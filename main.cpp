@@ -15,10 +15,6 @@ LegClass legKine;
 Eigen::Matrix<double,6,1> FKDIY(Eigen::VectorXd q_B,bool removePasOff);
 Eigen::Matrix<double,14,1> IKDIY(Eigen::Matrix<double,5,1> peR, Eigen::Matrix<double,5,1> peL,bool removePasOff);
 
-double M8016_I2T(double Id);
-double M10015_I2T(double Id);
-double sgn(double in);
-
 int main() {
     Pinocchio_Utilities pinLib("../BonnieURDF_latest.urdf");
     const std::string urdf_filename_B = std::string("../BonnieURDF_latest.urdf");
@@ -31,9 +27,14 @@ int main() {
     Eigen::VectorXd v_B = Eigen::VectorXd::Ones(model_Bonnie.nv)*0;
     Eigen::VectorXd a_B = Eigen::VectorXd::Ones(model_Bonnie.nv)*0;
 
+    double ql_robot[5],qr_robot[5],qPas_l[2],qPas_r[2];
     Eigen::Matrix<double,14,1> q_B_ori;
     q_B_ori<<-0.008,-0.0021,-0.5407,-0.4365,1.2890,-1.0082,0.1733,
             0.0033,0.0021,0.5582,0.4433,-1.2814,0.9995,-0.1779;
+    qr_robot[0]=q_B_ori(0);qr_robot[1]=q_B_ori(1);qr_robot[2]=q_B_ori(2);qr_robot[3]=q_B_ori(3);qr_robot[4]=q_B_ori(6);
+    qPas_r[0]=q_B_ori(4);qPas_r[5]=q_B_ori(5);
+    ql_robot[0]=q_B_ori(7);ql_robot[1]=q_B_ori(8);ql_robot[2]=q_B_ori(9);ql_robot[3]=q_B_ori(10);ql_robot[4]=q_B_ori(13);
+    qPas_l[0]=q_B_ori(11);qPas_r[0]=q_B_ori(12);
     q_B<<-0.008,-0.0021,-0.5407,-0.4365,1.2890,-1.0082,0.1733,
             0.0033,0.0021,0.5582,0.4433,-1.2814,0.9995,-0.1779;
     q_B(4)=q_B(4)-98.66/180*pi;
@@ -88,11 +89,12 @@ int main() {
     std::cout<<"J_L_DIY"<<std::endl;
     std::cout<<J_L_DIY<<std::endl;
     // test for the change of Ig under different leg length
-    pinLib.computeJac(q_B_ori);
+    pinLib.setJointAngle(qr_robot,ql_robot,qPas_r,qPas_l);
+    pinLib.computeJac();
     std::cout<<pinLib.J_L<<std::endl;
     std::cout<<pinLib.J_R<<std::endl;
 
-    pinLib.computeIg(q_B_ori);
+    pinLib.computeIg();
     std::cout<<pinLib.Ig<<std::endl;
 
     //================ Test for jacobian estimated motor torques ==========
@@ -138,8 +140,9 @@ int main() {
         Il[0]=fileRW.values[39];Il[1]=fileRW.values[40];Il[2]=fileRW.values[41];Il[3]=fileRW.values[42];
 
         q_B_ori<<ql[0],ql[1],ql[2],ql[3],pas[2],pas[3],ql[4],qr[0],qr[1],qr[2],qr[3],pas[0],pas[1],qr[4];
-
-        pinLib.computeJac(q_B_ori);
+        qPas_r[0]=pas[0];qPas_r[1]=pas[1];qPas_l[0]=pas[2];qPas_l[1]=pas[3];
+        pinLib.setJointAngle(qr,ql,qPas_r,qPas_l);
+        pinLib.computeJac();
         //std::cout<<pinLib.J_L<<std::endl;
         //std::cout<<pinLib.J_R<<std::endl;
         Reul=Pinocchio_Utilities::eul2Rot(eul[0],eul[1],0);
@@ -158,8 +161,8 @@ int main() {
 
         tauL=pinLib.J_L.transpose()*WrenchL;
         tauR=pinLib.J_R.transpose()*WrenchR;
-        tauL_M<< M10015_I2T(Il[0]),M8016_I2T(Il[1]),M8016_I2T(Il[2]),M10015_I2T(Il[3]),0;
-        tauR_M<< M10015_I2T(Ir[0]),M8016_I2T(Ir[1]),M8016_I2T(Ir[2]),M10015_I2T(Ir[3]),0;
+        tauL_M<< pinLib.M10015_I2T(Il[0]),pinLib.M8016_I2T(Il[1]),pinLib.M8016_I2T(Il[2]),pinLib.M10015_I2T(Il[3]),0;
+        tauR_M<< pinLib.M10015_I2T(Ir[0]),pinLib.M8016_I2T(Ir[1]),pinLib.M8016_I2T(Ir[2]),pinLib.M10015_I2T(Ir[3]),0;
 
         std::cout<<"================"<<std::endl;
         std::cout<<"pitch angle: "<<eul[1]<<std::endl;
@@ -186,7 +189,7 @@ int main() {
     std::cout<<pinLib.pe_L.transpose()<<std::endl;
     std::cout<<pinLib.pe_R.transpose()<<std::endl;
 
-    pinLib.computeG(q_B_ori);
+    pinLib.computeG();
     std::cout<<pinLib.Gq.transpose()<<std::endl;
 
     //---------------------- Test for centroid inertia -------------------------
@@ -194,35 +197,19 @@ int main() {
     Eigen::Matrix<double,5,1> peL,peR;
     peL<<0,0.0824,-0.6,0,0;
     peR<<0,-0.0824,-0.6,0,0;
-    qIK=IKDIY( peR, peL,false);
+    qIK=IKDIY( peR, peL, true);
 //    Eigen::Matrix<double,6,1> peFK;
 //    peFK=FKDIY(qIK);
 //    std::cout<<peFK.transpose()<<std::endl;
     std::cout<<qIK.transpose()<<std::endl;
-    pinLib.computeIg(qIK);
+
+    pinLib.qB_urdf=qIK;
+    pinLib.computeIg();
     std::cout<<pinLib.Ig<<std::endl;
     std::cout<<pinLib.pe_R.transpose()<<std::endl;
     std::cout<<pinLib.pe_L.transpose()<<std::endl;
 }
-double M8016_I2T(double Id)
-{
-    double Icmd=Id/66.0*4096.0;
-    return Icmd*0.02245+ sgn(Icmd)*0.81449;
-}
-double M10015_I2T(double Id)
-{
-    double Icmd=Id/66.0*4096.0;
-    return Icmd*0.03148+sgn(Icmd)*0.1755;
-}
-double sgn(double in)
-{
-    if (in>0)
-        return 1.0;
-    else if (in<0)
-        return -1.0;
-    else
-        return 0.0;
-}
+
 Eigen::Matrix<double,6,1> FKDIY(Eigen::VectorXd q_B,bool removePasOff)
 {
     auto q_kine=q_B;
