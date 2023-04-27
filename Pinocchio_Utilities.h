@@ -21,6 +21,7 @@ public:
     Eigen::Matrix<double,3,1> pe_L,pe_R;
     Eigen::Matrix<double,14,1> Gq; // generalized gravity term
     Eigen::Matrix<double,14,1> qB_urdf;
+    Eigen::Matrix<double,3,1> pCoM;
 
     Pinocchio_Utilities(std::string urdfName);
 

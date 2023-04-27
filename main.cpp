@@ -208,6 +208,7 @@ int main() {
     std::cout<<pinLib.Ig<<std::endl;
     std::cout<<pinLib.pe_R.transpose()<<std::endl;
     std::cout<<pinLib.pe_L.transpose()<<std::endl;
+    std::cout<<pinLib.pCoM.transpose()<<std::endl;
 }
 
 Eigen::Matrix<double,6,1> FKDIY(Eigen::VectorXd q_B,bool removePasOff)

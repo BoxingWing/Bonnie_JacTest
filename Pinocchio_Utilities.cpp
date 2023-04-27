@@ -9,6 +9,7 @@ Pinocchio_Utilities::Pinocchio_Utilities(std::string urdfName) {
     pinocchio::JointModelFreeFlyer root_joint;
     pinocchio::urdf::buildModel(urdfName,root_joint,model_Bonnie_Dynamic);
     qB_urdf.setZero();
+    pCoM.setZero();
 }
 
 void Pinocchio_Utilities::setJointAngle(double *qr, double *ql, double *qPas_r, double *qPas_l) {
@@ -60,6 +61,7 @@ void Pinocchio_Utilities::computeIg() {
     Eigen::VectorXd v_B = Eigen::VectorXd::Ones(model_Bonnie_Static.nv)*0;
     pinocchio::ccrba(model_Bonnie_Static,data_B,qB_urdf,v_B);
     Ig=data_B.Ig.inertia().matrix();
+    pCoM=data_B.com[0];
     pe_L=data_B.oMi[l_ankle_Joint].translation();
     pe_R=data_B.oMi[r_ankle_Joint].translation();
 }
