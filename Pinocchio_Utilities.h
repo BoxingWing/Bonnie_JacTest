@@ -10,6 +10,7 @@
 #include "pinocchio/algorithm/jacobian.hpp"
 #include "pinocchio/algorithm/centroidal.hpp"
 #include "pinocchio/algorithm/rnea.hpp"
+#include "pinocchio/algorithm/center-of-mass.hpp"
 
 class Pinocchio_Utilities {
 public:
@@ -19,9 +20,12 @@ public:
     Eigen::Matrix<double,4,5> J_L,J_R;
     Eigen::Matrix<double,3,3> Ig;
     Eigen::Matrix<double,3,1> pe_L,pe_R;
-    Eigen::Matrix<double,14,1> Gq; // generalized gravity term
+    Eigen::Matrix<double,20,1> Gq; // generalized gravity term, including fx, fy, fz, taux, tauy, tauz, tauQ1-tauQ14
     Eigen::Matrix<double,14,1> qB_urdf;
     Eigen::Matrix<double,3,1> pCoM;
+    Eigen::Matrix<double,3,1> pBaseLink;    // position of the baselink
+    Eigen::Matrix<double,4,1> BaseQuat;    // quaternion of the baselink
+    double totalMass{0};
 
     Pinocchio_Utilities(std::string urdfName);
 
